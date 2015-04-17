@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import numpy
-from daltools.util import unformatted, blocked, full
+from util import unformatted, blocked, full
 from basinfo import BasInfo
 
 class SiriusRestart(unformatted.FortranBinary):

@@ -3,7 +3,7 @@
 
 import sys
 import numpy
-from daltools.util.unformatted import FortranBinary
+from util.unformatted import FortranBinary
 
 class BasInfo():
     """Simple class for BASINFO data"""
