@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import os
 import numpy
 from util import unformatted, blocked, full
 from basinfo import BasInfo
@@ -34,6 +35,28 @@ class SiriusRestart(unformatted.FortranBinary):
                    ).reshape((self.basinfo.nbas[isym], self.basinfo.norb[isym]), order='F')
             cmo.subblock[isym] = cmoi.view(full.matrix)
         return cmo
+
+def cmo_from_targz(targz):
+    """Extract cmo from SIRIUS.RST in tar ball"""
+
+    tempdir = unpack_file_in_tempdir(targz, 'SIRIUS.RST')
+
+    sirius_rst = SiriusRestart(os.path.join(tempdir, 'SIRIUS.RST'))
+    cmo = sirius_rst.cmo
+
+    os.remove(sirius_rst.name)
+    os.rmdir(tempdir)
+
+    return cmo
+
+def unpack_file_in_tempdir(targz, filename):
+
+    import tarfile, tempfile
+    tempdir = tempfile.mkdtemp()
+    tarball = tarfile.open(targz, 'r:gz')
+    tarball.extract('SIRIUS.RST', tempdir)
+
+    return tempdir
 
 if __name__ == "__main__":
     import os, sys

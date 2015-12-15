@@ -1,7 +1,7 @@
 import unittest
 import os
 import numpy
-from ..sirrst import SiriusRestart
+from ..sirrst import SiriusRestart, cmo_from_targz
 
 class TestSirRst(unittest.TestCase):
 
@@ -19,8 +19,8 @@ class TestSirRst(unittest.TestCase):
     def test_cmo(self):
         numpy.testing.assert_almost_equal(self.sirrst.cmo[0], self.ref_cmo)
 
-    def test_hf_S_symmetry(self):
-        sirius_restart = SiriusRestart(os.path.join(self.suppdir, 'hf_S.SIRIUS.RST'))
-        cmo = sirius_restart.cmo
+    def test_cmo_from_tarball(self):
+        cmo = cmo_from_targz(os.path.join(self.suppdir, 'ball.tar.gz'))
+        numpy.testing.assert_almost_equal(cmo[0], self.ref_cmo)
         
 
